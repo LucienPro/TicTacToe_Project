@@ -55,13 +55,13 @@ def winner(board):
     """
     raise NotImplementedError
 
-
 def terminal(board):
-    """
-    Returns True if game is over, False otherwise.
-    """
-    raise NotImplementedError
+    # Cas True (match null ou X a gagné ou O a gagné
+    if (all(all(cell != EMPTY for cell in row) for row in board)) or winner(board) == 'X' or winner(board) == 'O':
+        return True
 
+    # Jeu encore en cours Cas False
+    return False
 
 def utility(board):
     """
