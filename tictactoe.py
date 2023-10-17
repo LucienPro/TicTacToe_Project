@@ -53,7 +53,34 @@ def winner(board):
     """
     Returns the winner of the game, if there is one.
     """
-    raise NotImplementedError
+    #lignes
+    for i in range(3):       
+        lv_check = str(board[i][0]) + str(board[i][1]) + str(board[i][2])
+        if lv_check == 'XXX' :
+            return 'X'
+        elif lv_check == 'OOO':
+            return 'O'
+    #colonnes
+    for i in range(3):       
+        lv_check = str(board[0][i]) + str(board[1][i]) + str(board[2][i])
+        if lv_check == 'XXX' :
+            return 'X'
+        elif lv_check == 'OOO':
+            return 'O'  
+    #1ère DIAG
+    lv_check = str(board[0][0]) + str(board[1][1]) + str(board[2][2])
+    if lv_check == 'XXX' :
+        return 'X'
+    elif lv_check == 'OOO':
+        return 'O'  
+    #2nd DIAG
+    lv_check = str(board[0][2]) + str(board[1][1]) + str(board[2][0])
+    if lv_check == 'XXX' :
+        return 'X'
+    elif lv_check == 'OOO':
+        return 'O'
+    #Sinon pas de gagnant
+    return None
 
 def terminal(board):
     # Cas True (match null ou X a gagné ou O a gagné
@@ -66,9 +93,14 @@ def terminal(board):
 def utility(board):
     """
     Returns 1 if X has won the game, -1 if O has won, 0 otherwise.
-    raise NotImplementedError
     """
-    raise NotImplementedError
+    lv_winner = winner(board)
+    if lv_winner == 'X':
+        return 1
+    elif lv_winner == 'O':
+        return -1
+    else:
+        return 0
     
 def minimax(board):
     """
