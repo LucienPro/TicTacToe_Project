@@ -103,7 +103,24 @@ def utility(board):
         return 0
     
 def minimax(board):
+    def minimax(board):
     """
     Returns the optimal action for the current player on the board.
     """
-    raise NotImplementedError
+    #Fonctionne que si l'IA commence avec "X" | W.I.P
+    actual_PLayer = player(board)
+    liste_Actions = actions(board)
+
+    for move in liste_Actions:
+        fake_Board = result(board,move)
+        ut = utility(fake_Board)
+        end = terminal(fake_Board)
+
+        if ut == 1 and actual_PLayer == "X":
+            return move
+        elif ut == -1 and actual_PLayer == "O":
+            return move
+        elif  end and ut == 0:
+            return move
+        else:
+            return minimax(fake_Board)
