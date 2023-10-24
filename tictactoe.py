@@ -47,7 +47,7 @@ def result(board, action):
     temp_board[action[0]][action[1]] = player(board)
     return temp_board
    else:
-    raise actionimpossibleresult
+    raise "actionimpossibleresult"
 
 def winner(board):
     """
