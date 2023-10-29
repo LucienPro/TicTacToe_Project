@@ -102,24 +102,68 @@ def utility(board):
     else:
         return 0
     
+def maxi(board):
+        """
+        Fonction qui va evaluer l'ensemble des coups possibles et retourner le meilleur 
+        """
+        liste_Actions = actions(board)
+        end = terminal(board)
+        eval = -10
+
+        if end:
+            #Evalue qui est le winner
+            return utility(board)
+        
+        for move in liste_Actions:
+            fake_board = result(board, move)
+            eval = max(eval, mini(fake_board))#Le plus grand entre eval et le resultat de mini pour trouver le score le plus grand
+        return eval
+
+def mini(board):
+        """
+        Fonction qui va evaluer l'ensemble des coups possibles et retourner le meilleur 
+        """
+        liste_Actions = actions(board)
+        end = terminal(board)
+        eval = 10
+        
+        if end:
+            #Evalue qui est le winner
+            return utility(board)
+                
+        for move in liste_Actions:
+            fake_board = result(board, move)
+            eval = min(eval, maxi(fake_board)) #Le plus petit entre eval et le resultat de maxi pour trouver le score le plus petit
+        return eval
+
 def minimax(board):
     """
     Returns the optimal action for the current player on the board.
     """
-    #Fonctionne que si l'IA commence avec "X" | W.I.P
     actual_PLayer = player(board)
-    liste_Actions = actions(board)
-
-    for move in liste_Actions:
-        fake_Board = result(board,move)
-        ut = utility(fake_Board)
-        end = terminal(fake_Board)
-
-        if ut == 1 and actual_PLayer == "X":
-            return move
-        elif ut == -1 and actual_PLayer == "O":
-            return move
-        elif  end and ut == 0:
-            return move
-        else:
-            return minimax(fake_Board)
+    if actual_PLayer == "X":
+        #Joueur X
+        best_score = -10
+        best_move = None
+        liste_Actions = actions(board)
+        for move in liste_Actions:
+            #Pour toutes les actions possibles
+            score = mini(result(board, move)) # Evaluation du score avec mini
+            if score > best_score:
+                #Meilleur score et move
+                best_score = score
+                best_move = move
+        return best_move
+    else:
+        #Joueur Y
+        best_score = 10
+        best_move = None
+        liste_Actions = actions(board)
+        for move in liste_Actions:
+            #Pour toutes les actions possibles
+            score = maxi(result(board, move)) # Evaluation du score avec maxi
+            if score < best_score:
+                #Meilleur score et move
+                best_score = score
+                best_move = move
+        return best_move
