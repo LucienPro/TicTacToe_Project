@@ -143,27 +143,27 @@ def minimax(board):
     actual_PLayer = player(board)
     if actual_PLayer == "X":
         #Joueur X
-        best_score = -10
+        best_eval = -10
         best_move = None
         liste_Actions = actions(board)
         for move in liste_Actions:
             #Pour toutes les actions possibles
-            score = mini(result(board, move)) # Evaluation du score avec mini
-            if score > best_score:
-                #Meilleur score et move
-                best_score = score
+            eval = mini(result(board, move)) # Evaluation de eval avec mini
+            if eval > best_eval:
+                #Meilleur eval et move
+                best_eval = eval
                 best_move = move
         return best_move
     else:
         #Joueur Y
-        best_score = 10
+        best_eval = 10
         best_move = None
         liste_Actions = actions(board)
         for move in liste_Actions:
             #Pour toutes les actions possibles
-            score = maxi(result(board, move)) # Evaluation du score avec maxi
-            if score < best_score:
-                #Meilleur score et move
-                best_score = score
+            eval = maxi(result(board, move)) # Evaluation de eval avec maxi
+            if eval < best_eval:
+                #Meilleur eval et move
+                best_eval = eval
                 best_move = move
         return best_move
